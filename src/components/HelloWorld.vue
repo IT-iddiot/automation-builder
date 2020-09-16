@@ -1,22 +1,30 @@
 <template>
 <div class="d-flex">
     
-    <node-showroom></node-showroom>
+    <!-- <node-showroom></node-showroom> -->
 
-    <div class="right_panel border">
+    <div class="right_panel">
 
         <div id="trigger_container">
             <trigger-node v-if="triggers === null" />
             <node-wrapper v-else
-                :details="node_data[triggers.trigger_type]"
-                :condition="selectedPropertyName"
+                :details="triggers"
                 modalId="triggerModal"
+            />
+        </div>
+
+        <div id="step_container">
+            <node-wrapper 
+                v-for="step in steps"
+                :key="step.id"
+                :details="step"
+                modalId="addStep"
             />
         </div>
 
         <add-step-button />
 
-        <trigger-modal  />
+        <trigger-modal :datas="modalData"  />
 
         <actions-modal />
         
@@ -27,7 +35,7 @@
 
 <script>
 //* components
-import nodeShowroom from './node_showroom.vue';
+// import nodeShowroom from './node_showroom.vue';
 import triggerNode from './trigger_node.vue';
 import nodeWrapper from '../components/node_wrapper.vue';
 import triggerModal from './modals/triggerModal.vue';
@@ -41,7 +49,7 @@ export default {
     name: "HelloWorld",
 
     components : {
-        nodeShowroom,
+        // nodeShowroom,
         triggerNode,
         nodeWrapper,
         triggerModal,
@@ -61,15 +69,9 @@ export default {
             'triggers',
             'node_data',
             'allProduct',
+            'modalData',
+            'steps'
         ]),
-
-        selectedPropertyName() {
-            if(this.triggers === null) return null;
-            const array = this.triggers.trigger_type === 'submitted_form'
-                        ? this.allForm
-                        : this.allProduct;
-            return array.find(e => e.id === this.triggers.properties.id).name;
-        }
     },
 
     methods: {
@@ -102,7 +104,7 @@ p { margin: 0; }
 //* left panel element list, for references only 
 
 .left_panel, .right_panel {
-    border: 1px solid lightgrey;
+    // border: 1px solid lightgrey;
     border-radius : 10px;
 }
 
@@ -112,12 +114,13 @@ p { margin: 0; }
 }
 
 .right_panel {
-    width : 72vw;
+    width : 90vw;
     margin: 0 auto;
+    // padding : 2rem;
 }
 
 .option_wrapper {
-    padding: 0.5rem 0.25rem;
+    padding: 0.5rem 0.25rem 0; 
 }
 
 .trigger_description {
