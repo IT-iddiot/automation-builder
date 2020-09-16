@@ -12,7 +12,7 @@
                     <template v-slot:option="option">
                         <div class="option_wrapper">
                             <strong>{{ option.title }}</strong>
-                            <p class="mt-1">{{option.desc}}</p>
+                            <p class="mt-1">{{ option.view.desc }}</p>
                         </div>
                     </template>
                 </v-select>
@@ -20,11 +20,11 @@
 
             <div class="form-group text-left" v-if="selectedValue !== null">
                 <label class="trigger_description">
-                    Which {{ selectedValue.which }} ?
+                    Which {{ selectedValue.view.which }} ?
                 </label>
-                <v-select v-model="selectedValue.property" label="name" :options="trigger_property">
+                <v-select v-model="selectedValue.properties" label="name" :options="trigger_property">
                     <template v-slot:option="option">
-                        <div class="option_wrapper">
+                        <div class="option_wrapper py-2">
                             <strong>{{ option.name }}</strong>
                         </div>
                     </template>
@@ -47,7 +47,7 @@
 </template>
 
 <script>
-//* plugins 
+//* plugins (super 麻煩 to use $ in vue cli)
 import jQuery from "jquery";
 const $ = jQuery;
 window.$ = $;
@@ -76,12 +76,13 @@ export default {
         ...mapState([
             'allForm',
             'allProduct',
+            'modalData',
             'triggerOptions',
         ]),
 
         trigger_property() {
             if(this.selectedValue === null) return [];
-            return this.selectedValue.type === 'submitted_form'
+            return this.selectedValue.trigger_type === 'submitted_form'
                 ? this.allForm
                 : this.allProduct; 
         },
@@ -93,18 +94,21 @@ export default {
         },
 
         saveTrigger() {
-            const item = this.selectedValue;
             this.$store.commit('saveTriggers', 
             {
                 type : "trigger",
                 segment_description : "everyone",
-                trigger_type : item.type,
-                properties : {
-                    id : item.property.id
-                }
+                ...this.selectedValue
             });
+            this.selectedValue = null;
             $("#triggerModal").modal('hide');
         },
+    },
+
+    watch : {
+        modalData(newValue) {
+            this.selectedValue = newValue;
+        }
     }
 
 }
