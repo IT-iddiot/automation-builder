@@ -5,15 +5,18 @@
             class="btn btn_trigger_condition" 
             :class="borderOnHover"
             :data-target="`#${modalId}`"
+            @click="triggerModal"
             @mouseover="isHover = true"
             @mouseleave="isHover = false"
         >
-            <span class="btn_left_border" :class="details.class" />
-            <img class="container_image" :src="details.image" >
+            <span class="btn_left_border" :class="details.view.border" />
+            <img class="container_image" :src="details.view.image" />
             <span class="divider" />
+
             <div class="text_wrapper">
                 <span>{{ details.title }}</span>
-                <span>{{ condition }}</span>
+                <span v-if="details.type === 'delay'">{{ details.description}}</span>
+                <span v-else>{{ details.properties.name }}</span>
             </div>
 
             <button v-show="isHover" @click.stop="deleteNode" class="btn delete_button">
@@ -27,12 +30,12 @@
 </template>
 
 <script>
+import { mapMutations, mapState } from 'vuex';
 
 export default {
     name : "nodeWrapper",
     props : {
         details : Object,
-        condition : [Object, String],
         modalId : String
     },
     data() {
@@ -41,12 +44,17 @@ export default {
         }
     },
     computed : {
+
+        ...mapState([
+            'node_data'
+        ]),
+
         borderOnHover() {
             if(!this.isHover) return null;
             const node_class = this.details.type;
             if(node_class === 'trigger') {
                 return 'trigger_onhover_border';
-            } else if(node_class === 'condition') {
+            } else if(node_class === 'delay') {
                 return 'condition_onhover_border';
             } else {
                 return 'actions_onhover_border';
@@ -54,10 +62,24 @@ export default {
         }
     },
     methods : {
+
+        ...mapMutations([
+            'deleteTrigger',
+            'setModalData',
+            'deleteStep'
+        ]),
+
         deleteNode() {
             if(this.details.type === 'trigger') {
-                this.$store.commit('deleteTrigger');
-            }
+                this.deleteTrigger();
+            } else {
+                //* delete delay & action share same commit
+                this.deleteStep(this.details.id);
+            } 
+        },
+
+        triggerModal() {
+            this.setModalData(this.details);
         }
     }
 }
@@ -73,6 +95,10 @@ export default {
         color: red;
     }
 
+}
+
+.violet_border {
+    background: #734bbd;
 }
 
 .wrapper_container {
