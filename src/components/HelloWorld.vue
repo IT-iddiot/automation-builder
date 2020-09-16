@@ -9,20 +9,22 @@
             <trigger-node v-if="triggers === null" />
             <node-wrapper v-else
                 :details="triggers"
+                index="0"
                 modalId="triggerModal"
             />
+
+            <add-step-button />
         </div>
 
         <div id="step_container">
             <node-wrapper 
-                v-for="step in steps"
+                v-for="(step,index) in steps"
                 :key="step.id"
+                :index="index + 1"
                 :details="step"
                 modalId="addStep"
             />
         </div>
-
-        <add-step-button />
 
         <trigger-modal :datas="modalData"  />
 
@@ -116,7 +118,6 @@ p { margin: 0; }
 .right_panel {
     width : 90vw;
     margin: 0 auto;
-    // padding : 2rem;
 }
 
 .option_wrapper {

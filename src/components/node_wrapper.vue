@@ -1,48 +1,61 @@
 <template>
-    <div class="wrapper_container">
-        <button 
-            data-toggle="modal" 
-            class="btn btn_trigger_condition" 
-            :class="borderOnHover"
-            :data-target="`#${modalId}`"
-            @click="triggerModal"
-            @mouseover="isHover = true"
-            @mouseleave="isHover = false"
-        >
-            <span class="btn_left_border" :class="details.view.border" />
-            <img class="container_image" :src="details.view.image" />
-            <span class="divider" />
+    <div>
+        <div class="wrapper_container">
+            <button 
+                data-toggle="modal" 
+                class="btn btn_trigger_condition" 
+                :class="borderOnHover"
+                :data-target="`#${modalId}`"
+                @click="triggerModal"
+                @mouseover="isHover = true"
+                @mouseleave="isHover = false"
+            >
+                <span v-if="index !== '0'" class="top_connection_line" />
+                <span class="btn_left_border" :class="details.view.border" />
+                <img class="container_image" :src="details.view.image" />
+                <span class="divider" />
 
-            <div class="text_wrapper">
-                <span>{{ details.title }}</span>
-                <span v-if="details.type === 'delay'">{{ details.description}}</span>
-                <span v-else>{{ details.properties.name }}</span>
-            </div>
+                <div class="text_wrapper">
+                    <span>{{ details.title }}</span>
+                    <span v-if="details.type === 'delay'">{{ details.description}}</span>
+                    <span v-else>{{ details.properties.name }}</span>
+                </div>
 
-            <button v-show="isHover" @click.stop="deleteNode" class="btn delete_button">
-                <span>
-                    <i class="fas fa-trash-alt"></i>
-                </span>
+                <button v-show="isHover" @click.stop="deleteNode" class="btn delete_button">
+                    <span>
+                        <i class="fas fa-trash-alt"></i>
+                    </span>
+                </button>
+
             </button>
+        </div>
 
-        </button>
+        <add-step-button v-if="details.type !== 'trigger'" :index="index" />
     </div>
 </template>
 
 <script>
+import addStepButton from './addStepButton.vue';
 import { mapMutations, mapState } from 'vuex';
 
 export default {
     name : "nodeWrapper",
     props : {
         details : Object,
-        modalId : String
+        modalId : String,
+        index : [String, Number],
+
     },
     data() {
         return {
             isHover : false
         }
     },
+
+    components : {
+        addStepButton
+    },
+
     computed : {
 
         ...mapState([
@@ -81,7 +94,8 @@ export default {
         triggerModal() {
             this.setModalData(this.details);
         }
-    }
+    },
+
 }
 </script>
 
@@ -94,15 +108,10 @@ export default {
     &:hover {
         color: red;
     }
-
 }
 
 .violet_border {
     background: #734bbd;
-}
-
-.wrapper_container {
-    margin: 40px;
 }
 
 .btn_trigger_condition {
@@ -184,76 +193,29 @@ export default {
     align-items: center;
 }
 
+.connection_line {
+    position: absolute;
+    height: 50px;
+    border-left : 1px solid rgba(85, 85, 85, 0.8);
+    background: rgba(85, 85, 85, 0.8);
+    z-index : -1;
+}
+
+.top_connection_line {
+    @extend .connection_line;
+    content : '';
+    bottom: 100%;
+    left: 50%;
+}
+
+.btn_trigger_condition {
+
+    &::after {
+        @extend .connection_line;
+        content : '';
+        top: 100%;
+        left: 50%;
+    }
+}
+
 </style>
-
-<!-- <div class="wrapper_container">
-    <button class="btn btn_trigger_condition">
-        <span class="btn_left_border violet_border"></span>
-        <img class="container_image" src="../assets/form.svg">
-        <span class="divider"></span>
-        <div class="text_wrapper">
-            <span>Submitted a form</span>
-            <span>Any form</span>
-        </div>
-    </button>
-</div>
-
-<div class="wrapper_container">
-    <button class="btn btn_trigger_condition">
-        <span class="btn_left_border violet_border"></span>
-        <img class="container_image" src="../assets/purchase.svg">
-        <span class="divider"></span>
-        <div class="text_wrapper">
-            <span>Purchased a product</span>
-            <span>Any product</span>
-        </div>
-    </button>
-</div>
-
-<div class="wrapper_container">
-    <button class="btn btn_trigger_condition">
-        <span class="btn_left_border red_background"></span>
-        <img class="container_image" src="../assets/delay.svg">
-        <span class="divider"></span>
-        <div class="text_wrapper">
-            <span>Delay</span>
-            <span>For 1 minute</span>
-        </div>
-    </button>
-</div>
-
-<div class="wrapper_container">
-    <button class="btn btn_trigger_condition">
-        <span class="btn_left_border blue_background"></span>
-        <img class="container_image" src="../assets/email.svg">
-        <span class="divider"></span>
-        <div class="text_wrapper">
-            <span>Send an email</span>
-            <span>campaign : helloworld</span>
-        </div>
-    </button>
-</div>
-
-<div class="wrapper_container">
-    <button class="btn btn_trigger_condition">
-        <span class="btn_left_border blue_background"></span>
-        <img class="container_image" src="../assets/tag.svg">
-        <span class="divider"></span>
-        <div class="text_wrapper">
-            <span>Add tag</span>
-            <span>tag : newcomers</span>
-        </div>
-    </button>
-</div>
-
-<div class="wrapper_container">
-    <button class="btn btn_trigger_condition">
-        <span class="btn_left_border blue_background"></span>
-        <img class="container_image" src="../assets/tag.svg">
-        <span class="divider"></span>
-        <div class="text_wrapper">
-            <span>Remove tag</span>
-            <span>tag : newcommers</span>
-        </div>
-    </button>
-</div> -->

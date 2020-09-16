@@ -21,6 +21,26 @@ export default {
 }
 </script>
 
-<style>
+<style scoped lang="scss">
+
+    .connection_line {
+        position: absolute;
+        height: 50px;
+        border-left : 1px solid rgba(85, 85, 85, 0.8);
+        background: rgba(85, 85, 85, 0.8);
+        z-index : -1;
+    }
+
+    .trigger_wrapper {
+
+        position: relative;
+
+        &::after {
+            @extend .connection_line;
+            content : '';
+            top: 100%;
+            left: 50%;
+        }
+    }
 
 </style>
