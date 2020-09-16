@@ -1,6 +1,6 @@
 <template>
     <div>
-        <button id="add_actions_button" class="btn btn-secondary" data-toggle="modal" data-target="#addStep">
+        <button @click="triggerModal" id="add_actions_button" class="btn btn-secondary" data-toggle="modal" data-target="#addStep">
             <i class="fas fa-plus flex_center"></i>
         </button>    
     </div>
@@ -8,7 +8,12 @@
 
 <script>
 export default {
-    name : "addNodeButton"
+    name : "addNodeButton",
+    methods : {
+        triggerModal() {
+            this.$store.commit('setModalData');
+        }
+    }
 }
 </script>
 

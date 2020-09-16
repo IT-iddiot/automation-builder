@@ -7,7 +7,7 @@
                     <h5 class="modal-title" :id="`${modalId}Label`">
                         {{ title }}
                     </h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <button @click="resetModalData" type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
@@ -31,12 +31,19 @@ export default {
     props: {
         modalId : String,
         title : String,
-        target : String
+        target : String,
+        datas : Object
     },
 
     computed : {
         isAddStep() {
             return this.modalId === 'addStep';
+        }
+    },
+
+    methods : {
+        resetModalData() {
+            this.$store.commit('setModalData')
         }
     }
 }
@@ -46,7 +53,7 @@ export default {
 <style lang="scss" scoped>
 
 .step_wrapper {
-    padding: 24px 12px;
+    padding: 1rem;
 }
 
 .modal-dialog {
