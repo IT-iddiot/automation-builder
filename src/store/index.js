@@ -15,6 +15,7 @@ export default new Vuex.Store({
         triggers : null,
         modalData : null,
         node_data : node_data,
+        parentNodeIndex : null,
         actionOptions : actions,
         triggerOptions : triggers,
         //* Dummy data, for testing only 
@@ -35,6 +36,10 @@ export default new Vuex.Store({
 
         setModalData(state, payload = null) {
             state.modalData = payload;
+        },
+
+        setIndex(state, index) {
+            state.parentNodeIndex = index;
         },
 
         saveTriggers(state, payload) {
@@ -58,7 +63,7 @@ export default new Vuex.Store({
                 ...payload.view
             }
             payload.id = state.count+=1;
-            state.steps.push(payload);
+            state.steps.splice(state.parentNodeIndex, 0, payload);
         },
 
         saveAction(state, payload) {
@@ -74,7 +79,7 @@ export default new Vuex.Store({
                 ...settings.view
             }
             settings.id = state.count+=1;
-            state.steps.push(settings)
+            state.steps.splice(state.parentNodeIndex, 0, settings);
         },
 
         updateStep(state, payload) {

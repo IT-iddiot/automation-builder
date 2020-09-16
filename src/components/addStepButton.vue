@@ -7,11 +7,25 @@
 </template>
 
 <script>
+import { mapMutations } from 'vuex';
 export default {
     name : "addNodeButton",
+    props : {
+        index : {
+            type : Number,
+            default : 0
+        }
+    },
     methods : {
+
+        ...mapMutations([
+            'setIndex',
+            'setModalData'
+        ]),
+
         triggerModal() {
-            this.$store.commit('setModalData');
+            this.setIndex(this.index);
+            this.setModalData();
         }
     }
 }

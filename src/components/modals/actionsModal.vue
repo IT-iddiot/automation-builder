@@ -113,7 +113,7 @@ export default {
             'modalData',
             'actionOptions',
             'allTags',
-            'allEmails'
+            'allEmails',
         ]),
 
         ...mapGetters([
