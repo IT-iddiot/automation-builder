@@ -1,13 +1,27 @@
 <template>
     <div class="wrapper_container">
-        <button class="btn btn_trigger_condition">
-            <span class="btn_left_border" :class="details.class"></span>
+        <button 
+            data-toggle="modal" 
+            class="btn btn_trigger_condition" 
+            :class="borderOnHover"
+            :data-target="`#${modalId}`"
+            @mouseover="isHover = true"
+            @mouseleave="isHover = false"
+        >
+            <span class="btn_left_border" :class="details.class" />
             <img class="container_image" :src="details.image" >
-            <span class="divider"></span>
+            <span class="divider" />
             <div class="text_wrapper">
                 <span>{{ details.title }}</span>
                 <span>{{ condition }}</span>
             </div>
+
+            <button v-show="isHover" @click.stop="deleteNode" class="btn delete_button">
+                <span>
+                    <i class="fas fa-trash-alt"></i>
+                </span>
+            </button>
+
         </button>
     </div>
 </template>
@@ -18,12 +32,48 @@ export default {
     name : "nodeWrapper",
     props : {
         details : Object,
-        condition : [Object, String]
+        condition : [Object, String],
+        modalId : String
     },
+    data() {
+        return {
+            isHover : false
+        }
+    },
+    computed : {
+        borderOnHover() {
+            if(!this.isHover) return null;
+            const node_class = this.details.type;
+            if(node_class === 'trigger') {
+                return 'trigger_onhover_border';
+            } else if(node_class === 'condition') {
+                return 'condition_onhover_border';
+            } else {
+                return 'actions_onhover_border';
+            }
+        }
+    },
+    methods : {
+        deleteNode() {
+            if(this.details.type === 'trigger') {
+                this.$store.commit('deleteTrigger');
+            }
+        }
+    }
 }
 </script>
 
 <style scoped lang="scss">
+
+.delete_button {
+    position: absolute;
+    right: -10%;
+
+    &:hover {
+        color: red;
+    }
+
+}
 
 .wrapper_container {
     margin: 40px;
@@ -44,6 +94,13 @@ export default {
     width: 100%;
     max-width: 340px;
     user-select: none;
+
+    &:hover {
+        border-width: 1px;
+        border-style: solid;
+        border-left-color: transparent;
+        box-shadow: 0 4px 12px rgba(36,28,21,.12);
+    }
 }
 
 .btn_left_border {
@@ -53,16 +110,16 @@ export default {
     height: 68px;
 }
 
-.violet_border {
-    background: #734bbd;
+.trigger_onhover_border {
+    border-color: #734bbd;
 }
 
-.red_border {
-    background: rgb(242, 36, 70);
+.condition_onhover_border {
+    border-color : rgb(242, 36, 70);
 }
 
-.blue_border {
-    background : rgb(36, 174, 242);
+.actions_onhover_border {
+    border-color : rgb(36, 174, 242);
 }
 
 /* for image inside wrapper */
@@ -95,7 +152,7 @@ export default {
     color:rgba(36,28,21,.65);
 }
 
-.flex_center, .trigger_text_wrapper {
+.trigger_text_wrapper {
     display: flex;
     justify-content: flex-start;
     align-items: center;
