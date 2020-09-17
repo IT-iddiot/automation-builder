@@ -114,6 +114,14 @@ export default {
     background: #734bbd;
 }
 
+.red_border {
+    background: rgb(242, 36, 70);
+}
+
+.blue_border {
+    background : rgb(36, 174, 242);
+}
+
 .btn_trigger_condition {
     position: relative;
     display: inline-flex;
@@ -135,6 +143,13 @@ export default {
         border-style: solid;
         border-left-color: transparent;
         box-shadow: 0 4px 12px rgba(36,28,21,.12);
+    }
+
+    &::after {
+        @extend .connection_line;
+        content : '';
+        top: 100%;
+        left: 50%;
     }
 }
 
@@ -169,30 +184,6 @@ export default {
     border-left: 1px solid rgba(36,28,21,.15);
 }
 
-.text_wrapper {
-    display: flex;
-    flex-direction: column;
-    font-size: 14px;
-}
-
-.text_wrapper > span {
-    text-align: left;
-}
-
-.text_wrapper span:first-child {
-    font-weight: 700;
-}
-
-.text_wrapper span:last-child {
-    color:rgba(36,28,21,.65);
-}
-
-.trigger_text_wrapper {
-    display: flex;
-    justify-content: flex-start;
-    align-items: center;
-}
-
 .connection_line {
     position: absolute;
     height: 50px;
@@ -206,16 +197,6 @@ export default {
     content : '';
     bottom: 100%;
     left: 50%;
-}
-
-.btn_trigger_condition {
-
-    &::after {
-        @extend .connection_line;
-        content : '';
-        top: 100%;
-        left: 50%;
-    }
 }
 
 </style>

@@ -68,4 +68,9 @@ export default {
     font-weight : 700;
 }
 
+.modal.modal-static .modal-dialog { 
+    -webkit-transform: none !important;
+    transform: none !important; 
+}
+
 </style>

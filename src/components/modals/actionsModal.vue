@@ -214,6 +214,7 @@ export default {
 
     &:hover {
         cursor: pointer;
+        box-shadow: 0px 4px 15px 4px rgba(69, 65, 78, 0.1);
     }
 }
 

@@ -59,12 +59,6 @@ export default {
         addStepButton
     },
 
-    data() {
-        return {
-            
-        }
-    },
-
     computed : {
         ...mapState([
             'allForm',
@@ -76,9 +70,6 @@ export default {
         ]),
     },
 
-    methods: {
-
-    }
 };
 </script>
 
@@ -138,48 +129,6 @@ p { margin: 0; }
     width: 16px;
     height: 16px;
     margin-right: 0.3rem;
-}
-
-.divider {
-    margin: 0 12px;
-    height: 48px;
-    border-left: 1px solid rgba(36,28,21,.15);
-}
-
-.btn_trigger_condition {
-    position: relative;
-    display: inline-flex;
-    align-items: center;
-    height: 68px;
-    padding: 0 16px;
-    margin: 0;
-    line-height: 20px;
-    border: 1px solid #dbd9d2;
-    border-left-color: transparent;
-    background: #fff;
-    cursor: pointer;
-    width: 100%;
-    max-width: 340px;
-    user-select: none;
-}
-
-.btn_left_border {
-    position: absolute;
-    left: 0;
-    width: 4px;
-    height: 68px;
-}
-
-.violet_border {
-    background: #734bbd;
-}
-
-.red_border {
-    background: rgb(242, 36, 70);
-}
-
-.blue_border {
-    background : rgb(36, 174, 242);
 }
 
 .add_trigger_text {

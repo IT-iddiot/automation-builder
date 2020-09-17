@@ -7,7 +7,6 @@
             v-for="data in node_data" 
             :key="data.index"
             :details="data"
-            condition="whatever"
         />
 
     </div>
