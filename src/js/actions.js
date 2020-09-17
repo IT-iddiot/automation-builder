@@ -39,11 +39,19 @@ const emails = [
     },
     {
         id : 201,
-        name : "Wakanda forever"
+        name : "Wakanda forever "
     },
     {
         id : 301,
         name : "MCO again ?"
+    },
+    {
+        id : 401,
+        name : "You may interested in this product ✨"
+    },
+    {
+        id : 501,
+        name : "Thank you for your purchase 😘"
     },
 ]
 
@@ -58,7 +66,15 @@ const tags = [
     },
     {
         id : 30,
-        name : "sohai customers"
+        name : "valuable customers"
+    },
+    {
+        id : 40,
+        name : "subscribers"
+    },
+    {
+        id : 50,
+        name : "blacklisted"
     },
 ]
 

@@ -30,12 +30,20 @@ const forms = [
     },
     {
         id : 1,
-        name : "Form 1"
+        name : "Newsletter form"
     },
     {
         id : 2,
-        name : "Form 2"
-    }
+        name : "Signup form"
+    },
+    {
+        id : 3,
+        name : "Feedback form"
+    },
+    {
+        id : 4,
+        name : "Contact form"
+    },
 ]
 
 const products = [
@@ -45,11 +53,19 @@ const products = [
     },
     {
         id : 20,
-        name : 'Anker Soundcore Pro'
+        name : 'Orange iPhone 12 pro max'
     },
     {
         id : 30,
-        name : 'Awesome backpack'
+        name : 'Tesla Model S'
+    },
+    {
+        id : 40,
+        name : 'SpaceX Falcon 9'
+    },
+    {
+        id : 50,
+        name : 'Senheiser momentum true wireless 2'
     },
 ]
 
